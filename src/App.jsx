@@ -5,16 +5,22 @@ import "./App.css"
 export const App = () => {
   const [allTickets, setAllTickets] = useState([])
   const [showEmergencyOnly, setShowEmergency] = useState(false)
+  const [filteredTickets, setFilteredTickets] = useState([])
 
-  useEffect(() => {
+  useEffect(() => { //this has a .then statement, meaning this is async. Other things will load before this one because of the wait
     getAllTickets().then((ticketsArray) => {
       setAllTickets(ticketsArray)
     })
   }, []) //ONLY runs on initial render of component
 
   useEffect(() => {
-
-  }, [showEmergencyOnly])
+    if (showEmergencyOnly){
+      const emergencyTickets = allTickets.filter(ticket => ticket.emergency === true)
+      setFilteredTickets(emergencyTickets)
+    } else {
+      setFilteredTickets(allTickets)
+    }
+  }, [showEmergencyOnly, allTickets]) //runs on initial render and when showEmergencyOnly or allTickets changes
 
   return (
   <div className="tickets-container">
@@ -28,7 +34,7 @@ export const App = () => {
       }}>Show All</button>
     </div>
     <article className="tickets">
-      {allTickets.map(ticket => {
+      {filteredTickets.map(ticket => {
         return (
           <section className="ticket" key={ticket.id}>
             <header className="ticket-info">#{ticket.id}</header>

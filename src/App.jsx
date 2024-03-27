@@ -1,61 +1,18 @@
-import { useEffect, useState } from "react"
-import { getAllTickets } from "./services/ticketService"
 import "./App.css"
+import { CustomerList } from "./components/customers/CustomerList"
+import { TicketList } from "./components/tickets/TicketList"
 
 export const App = () => {
-  const [allTickets, setAllTickets] = useState([])
-  const [showEmergencyOnly, setShowEmergency] = useState(false)
-  const [filteredTickets, setFilteredTickets] = useState([])
-
-  useEffect(() => { //this has a .then statement, meaning this is async. Other things will load before this one because of the wait
-    getAllTickets().then((ticketsArray) => {
-      setAllTickets(ticketsArray)
-    })
-  }, []) //ONLY runs on initial render of component
-
-  useEffect(() => {
-    if (showEmergencyOnly){
-      const emergencyTickets = allTickets.filter(ticket => ticket.emergency === true)
-      setFilteredTickets(emergencyTickets)
-    } else {
-      setFilteredTickets(allTickets)
-    }
-  }, [showEmergencyOnly, allTickets]) //runs on initial render and when showEmergencyOnly or allTickets changes
-
-  return (
-  <div className="tickets-container">
-    <h2>Tickets</h2>
-    <div>
-      <button className="filter-btn btn-primary" onClick={() => {
-        setShowEmergency(true)
-      }}>Emergency</button>
-      <button className="filter-btn btn-info" onClick={() => {
-        setShowEmergency(false)
-      }}>Show All</button>
-    </div>
-    <article className="tickets">
-      {filteredTickets.map(ticket => {
-        return (
-          <section className="ticket" key={ticket.id}>
-            <header className="ticket-info">#{ticket.id}</header>
-            <div> {ticket.description}</div>
-            <footer>
-              <div>
-                <div className="ticket-info">emergency</div>
-                <div>{ticket.emergency ? "yes" : "no"}</div>
-              </div>
-            </footer>
-          </section>
-        )
-      })}
-    </article>
-  </div>
-  )
+  return <>
+    <CustomerList/>
+    {/*<TicketList/>*/}
+  </>
 }
 
 /*
 export const App = () => {
   const [count, setCount] = useState(0) //[stateVariable, setterFunction]
+  //the purpose of the setter function is that it informs state of changes to rerender
   //useState takes one argument, setting the inital value of the statedVariale. If nothing is passed, the value is undefined
 
   const handleButtonClick = () => {

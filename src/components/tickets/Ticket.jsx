@@ -15,6 +15,7 @@ export const Ticket = ({ticket}) => {
         const foundEmployee = employees.find((employee) => employee.id === ticket.employeeTickets[0]?.employeeId)
         setAssignedEmployee(foundEmployee)
     }, [employees, ticket])
+    
     return (
         <section className="ticket">
           <header className="ticket-info">#{ticket.id}</header>

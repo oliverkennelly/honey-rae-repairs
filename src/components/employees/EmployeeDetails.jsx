@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import "./Employees.css"
 import { useParams } from "react-router-dom"
 import { getEmployeeByUserId } from "../../services/employeeService"
+import { getEmployeeTickets } from "../../services/ticketService"
 
 export const EmployeeDetails = () => {
     const [employee, setEmployee] = useState({})
@@ -27,6 +28,9 @@ export const EmployeeDetails = () => {
         <div>
             <span className="employee-info">Rate : </span>
             {employee.rate}
+        </div>
+        <div>
+            <span className="employee-footer">Currently working on 1 ticket</span>
         </div>
     </section>)
 }

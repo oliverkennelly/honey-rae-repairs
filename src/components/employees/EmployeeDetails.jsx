@@ -2,16 +2,22 @@ import { useEffect, useState } from "react"
 import "./Employees.css"
 import { useParams } from "react-router-dom"
 import { getEmployeeByUserId } from "../../services/employeeService"
-import { getEmployeeTickets } from "../../services/ticketService"
 
 export const EmployeeDetails = () => {
     const [employee, setEmployee] = useState({})
+    const [ticketNumber, setTicketNumber] = useState(0)
     const { employeeId } = useParams()
 
     useEffect(() => {
         getEmployeeByUserId(employeeId).then(data => {
             const employeeObj = data[0]
             setEmployee(employeeObj)
+            const ticketArray = employeeObj?.employeeTickets
+            if (ticketArray !== undefined ){
+                for (let editedNumber = 0; editedNumber = ticketArray.length; editedNumber++){
+                    setTicketNumber(editedNumber)
+                }
+            }
         })
     }, [employeeId])
 
@@ -30,7 +36,7 @@ export const EmployeeDetails = () => {
             {employee.rate}
         </div>
         <div>
-            <span className="employee-footer">Currently working on 1 ticket</span>
+            <span className="employee-footer">Currently working on {ticketNumber} tickets</span>
         </div>
     </section>)
 }

@@ -6,6 +6,7 @@ import { getEmployeeByUserId } from "../../services/employeeService"
 export const EmployeeDetails = () => {
     const [employee, setEmployee] = useState({})
     const [ticketNumber, setTicketNumber] = useState(0)
+    // this was my attempt at getting the tickets to display and it broke everything so no thanks.
     const { employeeId } = useParams()
 
     useEffect(() => {
@@ -13,13 +14,9 @@ export const EmployeeDetails = () => {
             const employeeObj = data[0]
             setEmployee(employeeObj)
             const ticketArray = employeeObj?.employeeTickets
-            if (ticketArray !== undefined ){
-                for (let editedNumber = 0; editedNumber = ticketArray.length; editedNumber++){
-                    setTicketNumber(editedNumber)
-                }
-            }
+            setTicketNumber(ticketArray.length)
         })
-    }, [employeeId])
+    }, [employeeId]) 
 
     return (<section className="employee">
         <header className="employee-header">{employee.user?.fullName}</header>
